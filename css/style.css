@@ -13,8 +13,8 @@
 
 @media (max-width: 768px) {
     .iframe.frontrow {
-        width: 90%;
-        height: 90%;
+        width: 80%;
+        height: 80%;
         left: 50%;
         top: auto;
         bottom: 20px;
