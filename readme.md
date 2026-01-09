@@ -3,9 +3,9 @@
 A simple front-end e-commerce project built with HTML, Tailwind CSS, and JavaScript, featuring responsive design for mobile and tablet.
 
 ## Tech Stack
-- HTML
-- Tailwind CSS
-- JavaScript (Vanilla)
+- HTML5
+- CSS3, Tailwind CSS
+- JavaScript(ES6+)
 - Font Awesome
 
 ## How to Run
@@ -21,3 +21,4 @@ Fully static front-end project
 No backend or framework required
 
 Source: https://github.com/win11nt/e-Commerce-Developer-Practical-Test
+
