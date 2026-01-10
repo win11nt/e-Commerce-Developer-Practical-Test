@@ -11,17 +11,6 @@
     overflow: hidden
 }
 
-@media (max-width: 768px) {
-    .iframe.frontrow {
-        width: 80%;
-        height: 80%;
-        left: 50%;
-        top: auto;
-        bottom: 20px;
-        transform: translateX(-50%);
-    }
-}
-
 @keyframes marquee {
     0% {
         transform: translateX(0);

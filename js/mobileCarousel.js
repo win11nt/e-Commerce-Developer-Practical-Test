@@ -6,8 +6,13 @@
         "./images/trysculptique3.webp",
         "./images/trysculptique4.webp",
         "./images/trysculptique5.webp",
-        "./images/trysculptique6.png",
-        "./images/trysculptique7.png"
+        "./images/trysculptique8.webp",
+        "./images/trysculptique9.webp",
+        "./images/trysculptique10.webp",
+        "./images/trysculptique11.webp",
+        "./images/trysculptique12.webp",
+        "./images/trysculptique13.webp",
+        "./images/trysculptique14.webp",
     ];
 
     const track = document.getElementById("carousel-track");
@@ -16,77 +21,106 @@
     const nextBtn = document.getElementById("nextBtn");
 
     let currentIndex = 0;
+    let thumbIndex = 0;
 
     function updateSlide() {
+        track.style.transition = "transform 0.3s ease-in-out";
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateThumbs();
     }
 
     function updateThumbs() {
-        // dịch chuyển thumbnail track theo currentIndex
-        thumbTrack.style.transform = `translateX(-${currentIndex * 6}rem)`; // 6rem ~ width của mỗi thumb (w-24)
+        const thumbWidth = 6; // rem
+
+        thumbTrack.style.transition = "transform 0.5s ease-in-out";
+        thumbTrack.style.transform =
+            `translateX(-${thumbIndex * thumbWidth}rem)`;
     }
 
     nextBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateSlide();
+        currentIndex =
+            (currentIndex + 1) % images.length;
+
+        track.style.transition = "transform 0.3s ease-in-out";
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        if (thumbIndex === images.length - 1) {
+            thumbTrack.style.transition = "none";
+            thumbIndex = -1;
+            thumbTrack.style.transform =
+                `translateX(-${thumbIndex * 6}rem)`;
+        }
+
+        setTimeout(() => {
+            thumbTrack.style.transition = "transform 0.5s ease-in-out";
+            thumbIndex++;
+            updateThumbs();
+        }, 20);
     });
 
     prevBtn.addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateSlide();
+        currentIndex =
+            (currentIndex - 1 + images.length) % images.length;
+
+        track.style.transition = "transform 0.3s ease-in-out";
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        if (thumbIndex === 0) {
+            thumbTrack.style.transition = "none";
+            thumbIndex = images.length;
+            thumbTrack.style.transform =
+                `translateX(-${thumbIndex * 6}rem)`;
+        }
+
+        setTimeout(() => {
+            thumbTrack.style.transition = "transform 0.5s ease-in-out";
+            thumbIndex--;
+            updateThumbs();
+        }, 20);
     });
 
     function initTrack() {
         track.innerHTML = "";
-        images.forEach((src, i) => {
+
+        images.forEach(src => {
             const slide = document.createElement("div");
-            slide.className = "w-full h-full flex-shrink-0 relative";
-
-            const img = document.createElement("img");
-            img.src = src;
-            img.className = "rounded-lg w-[360px] h-auto object-contain mx-auto";
-
-            slide.appendChild(img);
-
-            if (i === 0) {
-                const sticker = document.createElement("img");
-                sticker.src = "./images/saleSticker.avif";
-                sticker.className = "absolute top-4 right-4 w-20 h-20";
-                slide.appendChild(sticker);
-
-                const popupBtn = document.createElement("div");
-                popupBtn.className =
-                    "nutritionTrigger absolute bottom-6 border border-black left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 px-6 py-2 rounded-full shadow-md cursor-pointer";
-                popupBtn.style =
-                    "background-color:#FFFFFFD9;color:#000000BF;font-family:'Montserrat';font-size:14px;";
-                popupBtn.innerHTML = `
-          <img src="./images/leavesProduct.png" class="w-6 h-6 object-contain" />
-          <span class="whitespace-nowrap leading-none">Nutritional Information</span>
-        `;
-                popupBtn.addEventListener("click", () => {
-                    document.getElementById("nutritionPopup").classList.remove("hidden");
-                });
-
-                slide.appendChild(popupBtn);
-            }
-
+            slide.className = "w-full h-full flex-shrink-0";
+            slide.innerHTML = `<img src="${src}" class="w-[360px] mx-auto object-contain rounded-lg" />`;
             track.appendChild(slide);
         });
+
+        const clone = document.createElement("div");
+        clone.className = "w-full h-full flex-shrink-0";
+        clone.innerHTML = `<img src="${images[0]}" class="w-[360px] mx-auto object-contain rounded-lg" />`;
+        track.appendChild(clone);
+
+        currentIndex = 0;
+        track.style.transform = "translateX(0)";
     }
+
 
     function initThumbs() {
         thumbTrack.innerHTML = "";
+
         images.forEach((src, idx) => {
             const thumb = document.createElement("img");
             thumb.src = src;
-            thumb.className = "w-21 px-1 h-21 object-contain cursor-pointer rounded-xl flex-shrink-0";
+            thumb.className =
+                "w-24 h-24 px-1 object-contain cursor-pointer rounded-xl flex-shrink-0";
             thumb.addEventListener("click", () => {
                 currentIndex = idx;
                 updateSlide();
             });
             thumbTrack.appendChild(thumb);
         });
+
+        for (let i = 0; i < images.length; i++) {
+            const clone = document.createElement("img");
+            clone.src = images[i];
+            clone.className =
+                "w-24 h-24 px-1 object-contain cursor-pointer rounded-xl flex-shrink-0";
+            thumbTrack.appendChild(clone);
+        }
+
     }
 
     initTrack();
